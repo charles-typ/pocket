@@ -1,0 +1,6 @@
+com/ibm/crail/storage/reflex/client/ReFlexStorageFuture.class
+com/ibm/crail/storage/reflex/ReFlexStorageTier.class
+com/ibm/crail/storage/reflex/ReFlexStorageConstants.class
+com/ibm/crail/storage/reflex/client/ReFlexStorageEndpoint.class
+com/ibm/crail/storage/reflex/client/ReflexStorageClient.class
+com/ibm/crail/storage/reflex/ReFlexStorageServer.class

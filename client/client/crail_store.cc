@@ -57,10 +57,12 @@ unique_ptr<CrailNode> CrailStore::Create(string &name, FileType type,
                                          bool enumerable) {
   Filename filename(name);
   int _enumerable = enumerable ? 1 : 0;
+  perror("Start creating name node client");
   auto create_res =
       namenode_client_->Create(filename, static_cast<int>(type), storage_class,
                                location_class, _enumerable);
 
+  perror("Finish creating name node client");
   if (!create_res) {
     return nullptr;
   }
@@ -74,13 +76,17 @@ unique_ptr<CrailNode> CrailStore::Create(string &name, FileType type,
   }
 
   auto file_info = create_res->file();
+  perror("Adding block here");
   AddBlock(file_info->fd(), 0, create_res->file_block());
-
+  perror("Done Adding block here");
   long long dir_offset = file_info->dir_offset();
   if (dir_offset >= 0) {
+    perror("here 1");
     auto parent_info = create_res->parent();
     AddBlock(parent_info->fd(), dir_offset, create_res->parent_block());
+    perror("here 2");
     string _name = filename.name();
+    perror("here 3");
     WriteDirectoryRecord(parent_info, _name, dir_offset, 1);
   }
 
@@ -151,14 +157,19 @@ int CrailStore::Ioctl(unsigned char op, string &name) {
 }
 
 unique_ptr<CrailNode> CrailStore::DispatchType(shared_ptr<FileInfo> file_info) {
+
+  perror("Doing this dispatch type");
   shared_ptr<BlockCache> file_block_cache = GetBlockCache(file_info->fd());
   if (file_info->type() == static_cast<int>(FileType::File)) {
+    perror("Doing this dispatch type 1");
     return make_unique<CrailFile>(file_info, namenode_client_, storage_cache_,
                                   file_block_cache);
   } else if (file_info->type() == static_cast<int>(FileType::Directory)) {
+    perror("Doing this dispatch type 2");
     return make_unique<CrailDirectory>(file_info, namenode_client_,
                                        storage_cache_, file_block_cache);
   } else {
+    perror("Doing this dispatch type 3");
     return nullptr;
   }
 }

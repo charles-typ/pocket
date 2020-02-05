@@ -40,6 +40,7 @@ NarpcStorageClient::~NarpcStorageClient() {}
 
 shared_ptr<Future> NarpcStorageClient::WriteData(int key, long long address,
                                                  shared_ptr<ByteBuffer> buf) {
+  perror("What the fuck are you doing here?");
   NarpcWriteRequest write_request(key, address, buf->remaining(), buf);
   shared_ptr<NarpcWriteResponse> write_response =
       make_shared<NarpcWriteResponse>(this);

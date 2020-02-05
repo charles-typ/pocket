@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-   name: pocket-datanode-nvme-job
+   name: pocket-datanode-nvme-jobnvme
 spec:
   parallelism: 1
   template:

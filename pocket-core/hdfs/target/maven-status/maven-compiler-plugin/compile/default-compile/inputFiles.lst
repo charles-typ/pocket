@@ -1,0 +1,6 @@
+/home/ubuntu/pocket/pocket-core/hdfs/src/main/java/org/apache/crail/hdfs/GetConf.java
+/home/ubuntu/pocket/pocket-core/hdfs/src/main/java/org/apache/crail/hdfs/CrailHDFS.java
+/home/ubuntu/pocket/pocket-core/hdfs/src/main/java/org/apache/crail/hdfs/CrailHadoopFileSystem.java
+/home/ubuntu/pocket/pocket-core/hdfs/src/main/java/org/apache/crail/hdfs/CrailHDFSInputStream.java
+/home/ubuntu/pocket/pocket-core/hdfs/src/main/java/org/apache/crail/hdfs/tools/HdfsIOBenchmark.java
+/home/ubuntu/pocket/pocket-core/hdfs/src/main/java/org/apache/crail/hdfs/CrailHDFSOutputStream.java

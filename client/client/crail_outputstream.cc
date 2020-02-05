@@ -24,6 +24,7 @@
 #include "crail_outputstream.h"
 
 #include <iostream>
+#include <sstream>
 #include <memory>
 
 #include "namenode/getblock_response.h"
@@ -82,9 +83,24 @@ int CrailOutputstream::Write(shared_ptr<ByteBuffer> buf) {
 
   int address = block_info->datanode()->addr();
   int port = block_info->datanode()->port();
-
+  int tmp = address;
+  unsigned char *_tmp = (unsigned char *)&tmp;
+  stringstream ss;
+  for (int i = 0; i < 4; i++) {
+    unsigned int ch = (unsigned int)_tmp[i];
+    ss << ch;
+    if (i < 3) {
+      ss << ".";
+    }
+  }
+  ss << "::" << port << endl;
+  const std::string msg = ss.str();
+  const char* cstr = msg.c_str();
+  perror(cstr);
+//  shared_ptr<StorageClient> storage_client = storage_cache_->Get(
+//      block_info->datanode()->Key(), block_info->datanode()->storage_class());
   shared_ptr<StorageClient> storage_client = storage_cache_->Get(
-      block_info->datanode()->Key(), block_info->datanode()->storage_class());
+    block_info->datanode()->Key(), 1);
   if (storage_client->Connect(address, port) < 0) {
     return -1;
   }

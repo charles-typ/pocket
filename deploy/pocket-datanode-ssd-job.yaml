@@ -1,9 +1,9 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-   name: pocket-datanode-ssd-jobjob
+   name: pocket-datanode-ssd-jobssd
 spec:
-  parallelism: 2
+  parallelism: 1
   template:
     metadata:
       labels:

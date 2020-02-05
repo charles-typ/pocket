@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++11 -g  -rdynamic CMakeFiles/iobench.dir/iobench.cc.o  -o iobench  -Wl,-rpath,/home/ubuntu/pocket/client/build/client: ../client/libcppcrail.so 

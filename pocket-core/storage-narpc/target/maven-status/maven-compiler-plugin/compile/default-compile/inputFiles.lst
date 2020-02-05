@@ -1,0 +1,10 @@
+/home/ubuntu/pocket/pocket-core/storage-narpc/src/main/java/org/apache/crail/storage/tcp/TcpStorageRequest.java
+/home/ubuntu/pocket/pocket-core/storage-narpc/src/main/java/org/apache/crail/storage/tcp/TcpStorageFuture.java
+/home/ubuntu/pocket/pocket-core/storage-narpc/src/main/java/org/apache/crail/storage/tcp/TcpStorageClient.java
+/home/ubuntu/pocket/pocket-core/storage-narpc/src/main/java/org/apache/crail/storage/tcp/TcpStorageTier.java
+/home/ubuntu/pocket/pocket-core/storage-narpc/src/main/java/org/apache/crail/storage/tcp/TcpStorageServer.java
+/home/ubuntu/pocket/pocket-core/storage-narpc/src/main/java/org/apache/crail/storage/tcp/TcpStorageProtocol.java
+/home/ubuntu/pocket/pocket-core/storage-narpc/src/main/java/org/apache/crail/storage/tcp/TcpStorageConstants.java
+/home/ubuntu/pocket/pocket-core/storage-narpc/src/main/java/org/apache/crail/storage/tcp/TcpStorageEndpoint.java
+/home/ubuntu/pocket/pocket-core/storage-narpc/src/main/java/org/apache/crail/storage/tcp/TcpStorageResponse.java
+/home/ubuntu/pocket/pocket-core/storage-narpc/src/main/java/org/apache/crail/storage/tcp/TcpStorageUtils.java
