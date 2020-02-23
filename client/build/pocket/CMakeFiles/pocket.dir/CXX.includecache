@@ -340,3 +340,9 @@ string
 crail_store.h
 /home/ubuntu/pocket/client/pocket/crail_store.h
 
+/home/ubuntu/pocket/client/pocket/pypocket.cxx
+boost/python.hpp
+-
+pocket_dispatcher.h
+/home/ubuntu/pocket/client/pocket/pocket_dispatcher.h
+

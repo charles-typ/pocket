@@ -97,10 +97,13 @@ int CrailOutputstream::Write(shared_ptr<ByteBuffer> buf) {
   const std::string msg = ss.str();
   const char* cstr = msg.c_str();
   perror(cstr);
-//  shared_ptr<StorageClient> storage_client = storage_cache_->Get(
-//      block_info->datanode()->Key(), block_info->datanode()->storage_class());
-  shared_ptr<StorageClient> storage_client = storage_cache_->Get(
-    block_info->datanode()->Key(), 1);
+  shared_ptr<StorageClient> storage_client;
+  if(port != 1234)
+    storage_client = storage_cache_->Get(
+      block_info->datanode()->Key(), block_info->datanode()->storage_class());
+  else
+    storage_client = storage_cache_->Get(
+      block_info->datanode()->Key(), 1);
   if (storage_client->Connect(address, port) < 0) {
     return -1;
   }
