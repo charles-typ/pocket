@@ -337,6 +337,12 @@ crail_outputstream.h
 /home/ubuntu/pocket/client/pocket/pocket_dispatcher.h
 string
 -
+boost/python.hpp
+-
+boost/python/stl_iterator.hpp
+-
+vector
+-
 crail_store.h
 /home/ubuntu/pocket/client/pocket/crail_store.h
 

@@ -3,7 +3,7 @@
 zip -r deploy.zip latency.py pocket.py libc.so.6 libstdc++.so.6 libpocket.so libcppcrail.so libboost_python-py35.so.1.58.0
 
 aws lambda create-function \
-    --function-name pocket_latency_test \
+    --function-name pocket_through_put_test \
     --region us-west-2 \
     --zip-file fileb://deploy.zip \
     --role arn:aws:iam::$AWS_ACCOUNT_NUMBER:role/$IAM_ROLE_NAME \

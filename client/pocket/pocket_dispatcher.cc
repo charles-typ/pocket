@@ -182,8 +182,7 @@ int PocketDispatcher::CountFiles(string directory) {
   return crail_.Ioctl((unsigned char)op, directory);
 }
 
-int PocketDispatcher::PutBuffer(const char data[], int len, string dst_file,
-                                bool enumerable) {
+int PocketDispatcher::PutBuffer(const char data[], int len, string dst_file, bool enumerable) {
   unique_ptr<CrailNode> crail_node =
       crail_.Create(dst_file, FileType::File, 0, 0, enumerable);
   if (!crail_node) {
@@ -239,4 +238,42 @@ int PocketDispatcher::GetBuffer(char data[], int len, string src_file) {
   inputstream->Close();
 
   return 0;
+}
+
+
+int PocketDispatcher::PutBufferBytes(boost::python::object py_buffer, int len, string dst_file, bool enumerable) {
+  namespace python = boost::python;
+  // `str` objects do not implement the iterator protcol (__iter__),
+  // but do implement the sequence protocol (__getitem__).  Use the
+  // `iter()` builtin to create an iterator for the buffer.
+  // >>> __builtins__.iter(py_buffer)
+  // python::object locals(python::borrowed(PyEval_GetLocals()));
+  // python::object py_iter = locals["__builtins__"].attr("iter");
+  // python::stl_input_iterator<char> begin(
+  // py_iter(py_buffer)), end;
+
+  PyObject* py_object = py_buffer.ptr();
+  Py_buffer buffer;
+  int stat = PyObject_GetBuffer(py_object, &buffer, PyBUF_READ);
+
+  //python::stl_input_iterator<uint8_t> begin(py_buffer), end;
+  //std::vector<uint8_t> buffer(begin, end);
+  //char * buffer = reinterpret_cast<char *>(py_object->buf);
+  //int ret = PutBuffer(reinterpret_cast<char *>(&buffer[0]), len, dst_file, enumerable);
+  int ret = PutBuffer(reinterpret_cast<char *>(buffer.buf), len, dst_file, enumerable);
+  return ret;
+}
+
+
+boost::python::object PocketDispatcher::GetBufferBytes(int len, string src_file) {
+    namespace python = boost::python;
+    PyObject* pymemview;
+    char* export_data = new char[len];
+    int ret = GetBuffer(export_data, len, src_file);
+    //pymemview = PyMemoryView_FromMemory((uint8_t*) export_data, len, PyBUF_READ);
+    //py_buffer = PyBytes_FromObject(pymemview);
+    PyObject* py_object = PyBytes_FromStringAndSize(export_data, len);
+    python::handle<> handle(python::borrowed(py_object));
+    delete[] export_data;
+    return python::object(handle);
 }

@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-   name: pocket-datanode-dram-job0
+   name: pocket-datanode-dram-jobdram
 spec:
   parallelism: 1
   template:

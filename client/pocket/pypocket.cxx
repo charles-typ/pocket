@@ -16,7 +16,9 @@ BOOST_PYTHON_MODULE(libpocket)
 			.def("PutBuffer", &PocketDispatcher::PutBuffer)
 			.def("GetBuffer", &PocketDispatcher::GetBuffer)
 			.def("CountFiles", &PocketDispatcher::CountFiles)
+            .def("PutBufferBytes", &PocketDispatcher::PutBufferBytes)
+            .def("GetBufferBytes", &PocketDispatcher::GetBufferBytes)
 		;
 
-	
+
 }

@@ -96,7 +96,6 @@ int CrailOutputstream::Write(shared_ptr<ByteBuffer> buf) {
   ss << "::" << port << endl;
   const std::string msg = ss.str();
   const char* cstr = msg.c_str();
-  perror(cstr);
   shared_ptr<StorageClient> storage_client;
   if(port != 1234)
     storage_client = storage_cache_->Get(

@@ -65,6 +65,7 @@ metadata:
 spec:
   image: kope.io/k8s-1.8-debian-jessie-amd64-hvm-ebs-2018-02-08
   machineType: m3.medium
+  maxPrice: "3.0"
   maxSize: 1
   minSize: 1
   nodeLabels:
@@ -84,9 +85,10 @@ metadata:
   name: dram-nodes
 spec:
   image: kope.io/k8s-1.8-debian-jessie-amd64-hvm-ebs-2018-02-08
-  machineType: r4.2xlarge
-  maxSize: 2
-  minSize: 2
+  machineType: m4.10xlarge
+  maxPrice: "3.0"
+  maxSize: 1
+  minSize: 1
   nodeLabels:
     kops.k8s.io/instancegroup: dram-nodes
     spot: "true"
@@ -108,6 +110,7 @@ metadata:
 spec:
   image: kope.io/k8s-1.8-debian-jessie-amd64-hvm-ebs-2018-02-08
   machineType: m5.xlarge
+  maxPrice: "3.0"
   maxSize: 1
   minSize: 1
   nodeLabels:
@@ -132,11 +135,12 @@ spec:
   #image: kope.io/k8s-1.8-debian-jessie-amd64-hvm-ebs-2018-02-08
   image: ami-310a6249
   machineType: i3.2xlarge
-  maxSize: 2
-  minSize: 2
+  maxPrice: "3.0"
+  maxSize: 1
+  minSize: 1
   nodeLabels:
     kops.k8s.io/instancegroup: nvme-nodes
-    spot: "false"
+    spot: "true"
     pocketnodetype: "nvme"
   rootVolumeSize: 15
   role: Node

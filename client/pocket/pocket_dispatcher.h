@@ -25,7 +25,9 @@
 #define CRAIL_DISPATCHER_H
 
 #include <string>
-
+#include <boost/python.hpp>
+#include <boost/python/stl_iterator.hpp>
+#include <vector>
 #include "crail_store.h"
 
 using namespace std;
@@ -47,6 +49,8 @@ public:
   int DeleteFile(string file);
   int DeleteDir(string directory);
   int CountFiles(string directory);
+  int PutBufferBytes(boost::python::object py_buffer, int len, string dst_file, bool enumerable);
+  boost::python::object GetBufferBytes(int len, string src_file);
 
 private:
   CrailStore crail_;

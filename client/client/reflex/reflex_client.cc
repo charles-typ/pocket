@@ -65,7 +65,6 @@ int ReflexClient::Connect(int address, int port) {
   addr_.sin_port = htons(port);
   memset(&(addr_.sin_zero), 0, 8);
   addr_.sin_addr.s_addr = address;
-  perror("!!!!!!!!!!!!!!!!!!!!!!!Connecting to this server: ");
   if (connect(socket_, (struct sockaddr *)&addr_, sizeof(addr_)) == -1) {
     perror("cannot connect to server");
     return -1;
@@ -106,7 +105,6 @@ shared_ptr<ReflexFuture> ReflexClient::Get(long long lba,
 shared_ptr<ReflexFuture>
 ReflexClient::IssueOperation(int type, long long lba,
                              shared_ptr<ByteBuffer> payload) {
-  perror("Issueing operation, ");
   if (lba < 0) {
     cout << "invalid lba " << lba << endl;
   }
