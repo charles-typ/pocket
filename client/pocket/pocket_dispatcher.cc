@@ -261,6 +261,7 @@ int PocketDispatcher::PutBufferBytes(boost::python::object py_buffer, int len, s
   //char * buffer = reinterpret_cast<char *>(py_object->buf);
   //int ret = PutBuffer(reinterpret_cast<char *>(&buffer[0]), len, dst_file, enumerable);
   int ret = PutBuffer(reinterpret_cast<char *>(buffer.buf), len, dst_file, enumerable);
+  PyBuffer_Release(&buffer);
   return ret;
 }
 

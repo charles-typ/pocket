@@ -286,6 +286,7 @@ def incr_datanode_alloc_capacity(node, capacity, latency_sensitive):
 @asyncio.coroutine
 def generate_weightmask(jobid, jobGB, jobMbps, latency_sensitive):
   print("generate weightmask for ", jobid, jobGB, jobMbps, latency_sensitive)
+  jobMbps=NODE_Mbps/10
   wmask = []
   # Step 1: determine if capacity or throughput bound
   if latency_sensitive:
@@ -293,15 +294,15 @@ def generate_weightmask(jobid, jobGB, jobMbps, latency_sensitive):
   else:
     num_nodes_for_capacity = jobGB / FLASH_NODE_GB
 
-  jobMbps = 5 * NODE_Mbps
   num_nodes_for_throughput = jobMbps / NODE_Mbps
 
-  if num_nodes_for_throughput >= num_nodes_for_capacity:
-    print("jobid {} is throughput-bound".format(jobid))
-    throughput_bound = 1
-  else:
-    print("jobid {} is capacity-bound".format(jobid))
-    throughput_bound = 0
+  throughput_bound = 0
+  #if num_nodes_for_throughput >= num_nodes_for_capacity:
+  #  print("jobid {} is throughput-bound".format(jobid))
+  #  throughput_bound = 1
+  #else:
+  #  print("jobid {} is capacity-bound".format(jobid))
+  #  throughput_bound = 0
 
   # Step 2: check available resources in cluster
   # Note: only look at nodes that satisfy the capacity requiremnt on the right storage media
@@ -390,45 +391,45 @@ def generate_weightmask(jobid, jobGB, jobMbps, latency_sensitive):
 
     if job_net_weight_allocated == job_net_weight_req:
       print("Satisfied job without needing to launch new nodes :)")
-    else:
-      datanode_alloc_prelaunch = datanode_alloc.copy()
-      extra_nodes_needed = (job_net_weight_req - job_net_weight_allocated)
-      last_weight = extra_nodes_needed - int(extra_nodes_needed)
-      if last_weight == 0:
-        new_node_weights = [1.0 for i in range(0, int(extra_nodes_needed))]
-      else:
-        new_node_weights = [1.0 for i in range(0, int(extra_nodes_needed))]
-        new_node_weights.append(last_weight)
-      parallelism = math.ceil(extra_nodes_needed)
-      print("extra_nodes_needed: " + str(extra_nodes_needed))
-      print("parallelism: " + str(parallelism))
-      global waitnodes
-      waitnodes = parallelism
-      print("KUBERNETES: launch {} extra nodes, wait for them to come up and assing proper weights {}"\
-              .format(parallelism, new_node_weights))
-      # decide which kind of nodes to launch
-      if latency_sensitive and jobGB <= parallelism*DRAM_NODE_GB:
-        yield from launch_dram_datanode(parallelism)
-      elif latency_sensitive: # but capacity doesn't fit in paralellism*DRAM nodes
-        print("app is latency sensitive but high capacity, so we put {} in DRAM, rest in flash".format(FRAC_DRAM_ALLOCATION))
-        num_dram_nodes = int((jobGB * FRAC_DRAM_ALLOCATION)/ DRAM_NODE_GB)
-        num_flash_nodes = parallelism - num_dram_nodes
-        print("dram node to launch: " + str(num_dram_nodes))
-        print("flash node to launch: " + str(num_flash_nodes))
-        yield from launch_dram_datanode(num_dram_nodes)
-        yield from launch_flash_datanode(num_flash_nodes)
-      else:
-        yield from launch_flash_datanode(parallelism)
+    #else:
+    #  datanode_alloc_prelaunch = datanode_alloc.copy()
+    #  extra_nodes_needed = (job_net_weight_req - job_net_weight_allocated)
+    #  last_weight = extra_nodes_needed - int(extra_nodes_needed)
+    #  if last_weight == 0:
+    #    new_node_weights = [1.0 for i in range(0, int(extra_nodes_needed))]
+    #  else:
+    #    new_node_weights = [1.0 for i in range(0, int(extra_nodes_needed))]
+    #    new_node_weights.append(last_weight)
+    #  parallelism = math.ceil(extra_nodes_needed)
+    #  print("extra_nodes_needed: " + str(extra_nodes_needed))
+    #  print("parallelism: " + str(parallelism))
+    #  global waitnodes
+    #  waitnodes = parallelism
+    #  print("KUBERNETES: launch {} extra nodes, wait for them to come up and assing proper weights {}"\
+    #          .format(parallelism, new_node_weights))
+    #  # decide which kind of nodes to launch
+    #  if latency_sensitive and jobGB <= parallelism*DRAM_NODE_GB:
+    #    yield from launch_dram_datanode(parallelism)
+    #  elif latency_sensitive: # but capacity doesn't fit in paralellism*DRAM nodes
+    #    print("app is latency sensitive but high capacity, so we put {} in DRAM, rest in flash".format(FRAC_DRAM_ALLOCATION))
+    #    num_dram_nodes = int((jobGB * FRAC_DRAM_ALLOCATION)/ DRAM_NODE_GB)
+    #    num_flash_nodes = parallelism - num_dram_nodes
+    #    print("dram node to launch: " + str(num_dram_nodes))
+    #    print("flash node to launch: " + str(num_flash_nodes))
+    #    yield from launch_dram_datanode(num_dram_nodes)
+    #    yield from launch_flash_datanode(num_flash_nodes)
+    #  else:
+    #    yield from launch_flash_datanode(parallelism)
 
-      # wait for new nodes to start sending stats and add themselves to the datanode_alloc table,
-      # then assign them the proper weights
-      new_datanodes = yield from wait_for_datanodes_to_join(datanode_alloc_prelaunch, parallelism)
-      print("datanodes {} have joined!".format(new_datanodes))
-      i = 0
-      for n in new_datanodes:
-        wmask.append((n, new_node_weights[i]))
-        i = i + 1
-      print("wmask:", wmask)
+    #  # wait for new nodes to start sending stats and add themselves to the datanode_alloc table,
+    #  # then assign them the proper weights
+    #  new_datanodes = yield from wait_for_datanodes_to_join(datanode_alloc_prelaunch, parallelism)
+    #  print("datanodes {} have joined!".format(new_datanodes))
+    #  i = 0
+    #  for n in new_datanodes:
+    #    wmask.append((n, new_node_weights[i]))
+    #    i = i + 1
+    #  print("wmask:", wmask)
 
   else: # capacity-bound
     jobGB_weight_allocated = 0  # as a fraction of NODE_GB
@@ -644,6 +645,7 @@ def handle_register_job(reader, writer):
     print("Adding this nvme server" + each_ip)
     add_nvme_datanodes(each_ip)
   # generate weightmask
+  peakMbps=NODE_Mbps/10
   print("Generating weightmask")
   wmask, wmask_str = yield from generate_weightmask(jobid, jobGB, peakMbps, latency_sensitive)
  # wmask = [(ioctlcmd.calculate_datanode_hash("10.1.88.82", 50030), 1)]
