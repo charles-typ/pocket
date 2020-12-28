@@ -296,13 +296,12 @@ def generate_weightmask(jobid, jobGB, jobMbps, latency_sensitive):
 
   num_nodes_for_throughput = jobMbps / NODE_Mbps
 
-  throughput_bound = 0
-  #if num_nodes_for_throughput >= num_nodes_for_capacity:
-  #  print("jobid {} is throughput-bound".format(jobid))
-  #  throughput_bound = 1
-  #else:
-  #  print("jobid {} is capacity-bound".format(jobid))
-  #  throughput_bound = 0
+  if num_nodes_for_throughput >= num_nodes_for_capacity:
+    print("jobid {} is throughput-bound".format(jobid))
+    throughput_bound = 1
+  else:
+    print("jobid {} is capacity-bound".format(jobid))
+    throughput_bound = 0
 
   # Step 2: check available resources in cluster
   # Note: only look at nodes that satisfy the capacity requiremnt on the right storage media

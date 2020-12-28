@@ -21,10 +21,10 @@
 #==============================================================================
 #
 AWS_REGION="us-west-2"
-VPC_NAME="pocket-aws-nvme"
-VPC_CIDR="152.1.0.0/16"
-SUBNET_PUBLIC_CIDR="152.1.129.32/27"
-SUBNET_PRIVATE_CIDR="152.1.0.0/17"
+VPC_NAME="pocket-aws"
+VPC_CIDR="10.1.0.0/16"
+SUBNET_PUBLIC_CIDR="10.1.129.32/27"
+SUBNET_PRIVATE_CIDR="10.1.0.0/17"
 SUBNET_PUBLIC_AZ="us-west-2c"
 SUBNET_PRIVATE_AZ="us-west-2c"
 SUBNET_PUBLIC_NAME="pocket-kube-public"

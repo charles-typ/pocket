@@ -28,25 +28,25 @@ spec:
   - 0.0.0.0/0
   kubernetesVersion: 1.9.3
   masterPublicName: api.pocketcluster.k8s.local
-  networkCIDR: 10.1.0.0/16
-  networkID: vpc-07f43291e26bec0a2
+  networkCIDR: 152.1.0.0/16
+  networkID: vpc-00f1ae57fcede7f01
   networking:
     weave: {}
   nonMasqueradeCIDR: 100.64.0.0/10
   sshAccess:
   - 0.0.0.0/0
   subnets:
-  - cidr: 10.1.0.0/17
+  - cidr: 152.1.0.0/17
     name: pocket-kube-private
     type: Private
     zone: us-west-2c
-    id: subnet-032659525c69a9016
-    egress: nat-04dd5980bdf8bcfba
-  - cidr: 10.1.129.32/27
+    id: subnet-09055fbddd8bba17e
+    egress: nat-0e982f6bff3ca8f89
+  - cidr: 152.1.129.32/27
     name: pocket-kube-public
     type: Public
     zone: us-west-2c
-    id: subnet-0c164ced6b85f3cde
+    id: subnet-0f4a4e183cd79a017
   topology:
     dns:
       type: Public
@@ -65,7 +65,6 @@ metadata:
 spec:
   image: kope.io/k8s-1.8-debian-jessie-amd64-hvm-ebs-2018-02-08
   machineType: m3.medium
-  maxPrice: "3.0"
   maxSize: 1
   minSize: 1
   nodeLabels:
@@ -85,8 +84,7 @@ metadata:
   name: dram-nodes
 spec:
   image: kope.io/k8s-1.8-debian-jessie-amd64-hvm-ebs-2018-02-08
-  machineType: m4.10xlarge
-  maxPrice: "3.0"
+  machineType: r4.2xlarge
   maxSize: 5
   minSize: 5
   nodeLabels:
@@ -110,7 +108,6 @@ metadata:
 spec:
   image: kope.io/k8s-1.8-debian-jessie-amd64-hvm-ebs-2018-02-08
   machineType: m5.xlarge
-  maxPrice: "3.0"
   maxSize: 1
   minSize: 1
   nodeLabels:
@@ -135,8 +132,8 @@ spec:
   #image: kope.io/k8s-1.8-debian-jessie-amd64-hvm-ebs-2018-02-08
   image: ami-310a6249
   machineType: i3.2xlarge
-  maxSize: 0
-  minSize: 0
+  maxSize: 1
+  minSize: 1
   nodeLabels:
     kops.k8s.io/instancegroup: nvme-nodes
     spot: "false"
