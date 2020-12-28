@@ -14,9 +14,9 @@ import yaml
 from kubernetes import client, config
 import time
 
-CONTROLLER_IP = "10.1.47.178"    # note: the controller IP address is hard-coded in other places
+CONTROLLER_IP = "152.1.47.178"    # note: the controller IP address is hard-coded in other places
                                  # so when create controller VM in EC2, set its IP to 10.1.47.178
-NAMENODE_IP = "10.1.0.10"	 # set this to the metadata server IP
+NAMENODE_IP = "152.1.0.10"	 # set this to the metadata server IP
 NAMENODE_PORT = 9070
 
 DRAM_NODE_PORT = 50030
